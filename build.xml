@@ -1,0 +1,81 @@
+<project name="MyProject" default="compile" basedir=".">
+  <description>
+        ICE for Java build file
+  </description>
+  
+  <property name="clientClass"  value="agh.Client"/>
+  <property name="serverClass"  value="agh.Server"/>
+  
+  <!-- set global properties for this build -->
+  <property name="src" location="."/>
+  <property name="build" location="bin"/>
+  <property name="dist"  location="dist"/>
+  <property environment="env"/>
+
+  
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac classpath="${env.ICE_HOME}/lib/Ice.jar" srcdir="${src}" destdir="${build}"/>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
+  <target name="runClient">
+	  <java
+	        classname="${clientClass}"
+	        failonerror="true"
+	        dir="${build}">
+			<!--
+			fork="true"
+	        timeout="4000000"
+	        taskname="startAnt"
+			-->
+		    <classpath>
+			<pathelement path="${build}"/>
+	    		<pathelement location="${env.ICE_HOME}/lib/Ice.jar"/>
+		    </classpath>
+	  </java>
+  </target>
+  
+  <target name="runServer">
+	  <java
+	        classname="${serverClass}"
+		failonerror="true">
+		    <classpath>
+			<pathelement path="${build}"/>
+	    		<pathelement location="${env.ICE_HOME}/lib/Ice.jar"/>
+		    </classpath>
+		
+			<!--
+			    dir="${build}"
+			fork="true"
+	        timeout="4000000"
+	        taskname="startAnt"
+			-->
+	  </java>
+  </target>  
+  
+</project>
