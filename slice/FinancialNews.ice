@@ -1,8 +1,7 @@
-
+ 
 module FinancialNews {
 
   enum Currency {PLN, USD, EUR, CHF};
-
 
   interface NewsReceiver
   {

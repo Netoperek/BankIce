@@ -25,13 +25,13 @@ public class NewsReceiverI extends _NewsReceiverDisp {
 	
 	@Override
 	public void exchangeRate(Currency curr1, Currency curr2, float rate, Current __current){
-		System.out.println("crrr" + curr1);
+		System.out.println("Currency1: " + curr1 + " Currency2: " + curr2 + " rate: " + rate);
 		exchangeMap.put(curr1, rate);
 	}
 
 	@Override
 	public void interestRate(Currency curr, float rate, Current __current) {
-		System.out.println("crrr" + curr);
+		System.out.println("Currency" + curr + " rate: " + rate);
 		interestMap.put(curr, rate);
 	}
 

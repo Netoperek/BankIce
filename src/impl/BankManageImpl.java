@@ -30,7 +30,7 @@ public class BankManageImpl extends _BankManagerDisp {
 	}
 	
 	private static String createUniqueAccountNr(){
-		int digits = 26;
+		int digits = 4;
 		StringBuilder builder = new StringBuilder();
 		Random random = new Random();
 		
@@ -50,7 +50,12 @@ public class BankManageImpl extends _BankManagerDisp {
 		PrintWriter writer;
 		int balance = 1500100900;
 		String accountNumber = createUniqueAccountNr();
-		
+		if(!data.firstName.matches("([a-zA-Z])+"))
+			throw new IncorrectData("Incorrect first name");
+		if(!data.lastName.matches("([a-zA-Z])+"))
+			throw new IncorrectData("Incorrect last name");
+		if(data.NationalIDNumber.length() != 11)
+			throw new IncorrectData("Wrong NationalIDNumber length");
 		try {
 			writer = new PrintWriter(accounts + accountNumber, "UTF-8");
 			writer.println(balance);
@@ -72,14 +77,22 @@ public class BankManageImpl extends _BankManagerDisp {
 		}
 	}
 
-	@Override
+
+@Override
 	public void removeAccount(String accountID, Current __current)
 			throws IncorrectData, NoSuchAccount {
+
 		File f = new File(accounts + accountID);
 		if (!f.exists())
 			throw new NoSuchAccount();
 		if (accountID.matches("//d+"))
 			throw new IncorrectData();
+		
+		String pesel = AccountServant.readFile(accounts + accountID)[4].replace('\n', ' ').trim();
+		if( !pesel.equals(__current.ctx.get("pesel")) ){
+			throw new IncorrectData("You cannot remove" +
+					" account that is NOT yours");
+		}
 		f.delete();
 	}
 

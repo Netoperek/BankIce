@@ -1,11 +1,10 @@
 package server;
 
-import impl.AccountServant;
 import impl.BankManageImpl;
+import impl.MyCertificateVerifier;
 import impl.MyEvictor;
 import FinancialNews.NewsServerPrx;
 import FinancialNews.NewsServerPrxHelper;
-import Ice.Identity;
 
 public class Server {
 	
@@ -13,8 +12,6 @@ public class Server {
 		Ice.Communicator ic = null;
 		
 		try {
-			//ic = Ice.Util.initialize(args);
-
 			Ice.ObjectPrx base = ic.propertyToProxy("SR.Proxy");
 
 			NewsServerPrx servPrx = NewsServerPrxHelper.checkedCast(base);
@@ -39,10 +36,10 @@ public class Server {
         {
             ic = Ice.Util.initialize(args);
 
-            //Ice.PluginManager pluginMgr = ic.getPluginManager();
-            //Ice.Plugin plugin = pluginMgr.getPlugin("IceSSL");
-            //IceSSL.Plugin sslPlugin = (IceSSL.Plugin)plugin;
-            //sslPlugin.setCertificateVerifier(new MyCertificateVerifier());
+            Ice.PluginManager pluginMgr = ic.getPluginManager();
+            Ice.Plugin plugin = pluginMgr.getPlugin("IceSSL");
+            IceSSL.Plugin sslPlugin = (IceSSL.Plugin)plugin;
+            sslPlugin.setCertificateVerifier(new MyCertificateVerifier());
 			Ice.ObjectPrx base = ic.propertyToProxy("SR.Proxy");
 
 			NewsServerPrx servPrx = NewsServerPrxHelper.checkedCast(base);

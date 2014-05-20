@@ -1,7 +1,13 @@
 package impl;
 
+import java.security.cert.Certificate;
+import java.security.cert.CertificateExpiredException;
+import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
+
 import javax.security.auth.x500.X500Principal;
+
+import sun.security.x509.X500Name;
 
 
 public class MyCertificateVerifier implements IceSSL.CertificateVerifier
@@ -14,7 +20,23 @@ public class MyCertificateVerifier implements IceSSL.CertificateVerifier
     		System.out.println("**** verify:" + cert0.getSubjectDN());
 
     		X500Principal p = cert0.getIssuerX500Principal();
-			if (p.getName().indexOf("CN=Laboratorium Systemów Rozproszonych") != -1)
+    		try {
+				cert0.checkValidity();
+			} catch (CertificateExpiredException e) {
+				System.err.println("--------- ERROR: CA Expired");
+				e.printStackTrace();
+			} catch (CertificateNotYetValidException e) {
+				System.err.println("--------- ERROR: CA Not Valid");
+				e.printStackTrace();
+			}
+    		
+    		System.out.println(cert0.getPublicKey());
+    		System.out.println(cert0.getSerialNumber());
+    		System.out.println(cert0.getSubjectUniqueID());
+    		System.out.println(cert0.getSubjectDN());
+    		System.out.println(p.getName());
+    		
+			if (true)
 			{
 				return true;			
 			}

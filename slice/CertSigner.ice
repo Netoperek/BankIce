@@ -1,12 +1,15 @@
+
 #ifndef SR_ICE
 #define SR_ICE
 
 #include <BuiltinSequences.ice>
 
+
 //opcja kompilacji: -I .....slice\Ice CertSigner.ice
 
 module SR
 {
+ 
 	exception DataTooLong {};
 	exception IncorrectCSRFile {};
 	exception IncorrectName {};

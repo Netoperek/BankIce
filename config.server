@@ -3,8 +3,8 @@
 # "Hello". The following line sets the endpoints for this
 # adapter.
 #
-
-czak_norris.Endpoints=tcp -h 127.0.0.1 -p 11112
+#tcp -h 192.168.0.100 -p 11112:
+czak_norris.Endpoints=ssl -h 192.168.43.239 -p 10001
 SR.Proxy=financialnews:tcp -h 149.156.97.154 -p 11113
 
 #Ice.ThreadPool.Client.Size=4
@@ -31,7 +31,7 @@ Ice.ACM.Server=10
 # 1 = trace connection establishment and closure
 # 2 = like 1, but more detailed
 # 3 = like 2, but also trace data transfer
-#
+
 #Ice.Trace.Network=2
 
 #
@@ -52,9 +52,8 @@ Ice.ACM.Server=10
 
 #
 # SSL Configuration
-#
-#Ice.Plugin.IceSSL=IceSSL.PluginFactory
-#IceSSL.DefaultDir=.
-#IceSSL.Keystore=s.jks
-#IceSSL.Password=sr2014
-#IceSSL.Truststore=s.jks
+Ice.Plugin.IceSSL=IceSSL.PluginFactory
+IceSSL.DefaultDir=.
+IceSSL.Keystore=c.jks
+IceSSL.Password=lampa123
+IceSSL.Truststore=c.jks

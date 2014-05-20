@@ -1,4 +1,6 @@
-module Bank { 
+ 
+module Bank {
+
 
   exception IncorrectData { string reason; };
   exception RequestRejected { string reason; };
@@ -6,7 +8,7 @@ module Bank {
   exception IncorrectAmount {};
   exception NoSuchAccount {};
 
-  enum currency {PLN, USD, EUR, CHF}; 
+  enum currency {PLN, USD, EUR, CHF};
 
   enum accountType {SILVER, PREMIUM};
 
